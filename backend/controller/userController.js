@@ -1,3 +1,7 @@
+
+
+//https://chat.openai.com/share/5939f959-d262-44c1-944e-f431e61151b3
+
 const User = require("../modal/user");
 
 
@@ -44,11 +48,23 @@ const deleteUser = async (req, res) => {
 
   try {
     const deletedUser = await User.findByIdAndDelete(userId);
-    console.log({deletedUser})
+    console.log({deletedUser})//complete object of user
     if (!deletedUser) {
       return res.status(404).json({ message: 'User not found' });
     }
     res.json(deletedUser);
+    /************************************************/
+    /*
+    Use findOneAndDelete when you want to delete a single document based on a specific query.
+    Use findByIdAndDelete when you want to delete a single document by its unique _id.
+    Use deleteMany when you want to delete multiple documents based on a specific query condition.
+
+    const deletedUsers = await User.deleteMany({ username: 'desiredUsername' });, use deletedUser.deleteCount if it is 0 means no match
+
+    const deletedUser = await User.findOneAndDelete({ username: 'desiredUsername' });
+
+
+    */
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
